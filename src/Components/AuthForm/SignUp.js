@@ -1,7 +1,7 @@
 import React, { useRef, useState, useContext } from 'react';
 import './AuthForm.css'
 import { useSelector, useDispatch } from 'react-redux';
-import {AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import { useHistory } from 'react-router-dom';
 
 
@@ -9,7 +9,7 @@ export default function SignUp() {
 
     const [error, setError] = useState('');
     const history = useHistory();
-    const { signup } = useContext(AuthContext);
+    const {signup} = useContext(AuthContext);
 
     const showModal = useSelector(state => state);
 
@@ -33,18 +33,17 @@ export default function SignUp() {
 
         if(inputs.current[1].value !== inputs.current[2].value) {
             setError("Les mots de passe ne sont pas identiques");
+        } else {
+            try {
+                await signup(inputs.current[0].value, inputs.current[1].value);
+                dispatch({
+                    type: "CLOSEMODAL"
+                });
+                history.push('/loggedhome');
+            } catch {
+                setError('Erreur inconnu, veuillez réessayer');
+            };
         };
-
-        await signup(inputs.current[0].value, inputs.current[1].value);
-        // history.push('/loggedHome');
-        dispatch({
-            type: "CLOSEMODAL"
-        });
-
-        inputs.current.forEach(inp => {
-            inp.value = "";
-        });
-        setError('');
     };
 
     return (
@@ -60,7 +59,7 @@ export default function SignUp() {
                     <label htmlFor="psw-confirm">Confirmer le mot de passe :</label>
                     <input type="password" ref={addInput} id="psw-confirm" required />
                     <br />
-                    {error}
+                    <h5 style={{textAlign: 'center', color: 'red', fontStyle: 'italic'}}>{error}</h5>
                     <button className="btn-sign">Créer un compte</button>
                 </form>
                 <button onClick={closeModal} className="btn-close">X</button>
