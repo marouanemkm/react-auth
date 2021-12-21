@@ -19,6 +19,12 @@ export default function SignIn() {
         });
     };
 
+    const toggleSignUp = () => {
+        dispatch({
+            type: 'TOGGLEUP'
+        });
+    };
+
     const inputs = useRef([]);
     const addInput = el => {
         if(el && !inputs.current.includes(el)) {
@@ -55,7 +61,7 @@ export default function SignIn() {
                     <button className="btn-sign">Se connecter</button>
                 </form>
                 <button onClick={closeModal} className="btn-close">X</button>
-                <p className="bottom-help-txt">Vous n'avez pas encore de compte ?</p>
+                <p onClick={toggleSignUp} className="bottom-help-txt">Vous n'avez pas encore de compte ?</p>
             </div>
         </div>
     );

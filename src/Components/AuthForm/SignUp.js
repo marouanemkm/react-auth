@@ -20,6 +20,12 @@ export default function SignUp() {
         });
     };
 
+    const toggleSignIn = () => {
+        dispatch({
+            type: 'TOGGLEIN'
+        });
+    };
+
     // permet d'eviter de faire plusieurs useRef() et de mettre toutes les infos dans un tableau
     const inputs = useRef([]);
     const addInput = el => {
@@ -63,7 +69,7 @@ export default function SignUp() {
                     <button className="btn-sign">Créer un compte</button>
                 </form>
                 <button onClick={closeModal} className="btn-close">X</button>
-                <p className="bottom-help-txt">Vous avez déjà un compte ?</p>
+                <p onClick={toggleSignIn} className="bottom-help-txt">Vous avez déjà un compte ?</p>
             </div>
         </div>
     );
